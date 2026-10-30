@@ -13,7 +13,8 @@ import {
   Volume2, 
   VolumeX, 
   RotateCcw,
-  Command
+  Command,
+  Database
 } from 'lucide-react';
 import { ViewMode } from '@/types/task';
 
@@ -28,6 +29,8 @@ interface NavbarProps {
   toggleSound: () => void;
   onOpenNewTaskModal: () => void;
   onResetDemoData: () => void;
+  onOpenSupabaseModal: () => void;
+  isCloudConnected: boolean;
   taskCount: number;
   completedCount: number;
 }
@@ -43,6 +46,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   toggleSound,
   onOpenNewTaskModal,
   onResetDemoData,
+  onOpenSupabaseModal,
+  isCloudConnected,
   taskCount,
   completedCount,
 }) => {
@@ -122,6 +127,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Actions & Utilities */}
         <div className="navbar-actions">
+          {/* Supabase Database Connection Button */}
+          <button
+            onClick={onOpenSupabaseModal}
+            className={`btn btn-secondary btn-sm db-status-pill ${isCloudConnected ? 'db-connected' : ''}`}
+            title="Configure Supabase Database"
+            id="supabase-settings-btn"
+          >
+            <Database size={14} className={isCloudConnected ? 'text-emerald' : 'text-muted'} />
+            <span className="db-label-text">{isCloudConnected ? 'Cloud Sync' : 'Local Mode'}</span>
+            <span className={`db-indicator-dot ${isCloudConnected ? 'dot-green' : 'dot-yellow'}`} />
+          </button>
+
           {/* Sound Toggle */}
           <button
             onClick={toggleSound}
